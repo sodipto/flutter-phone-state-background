@@ -91,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> _stopCaller() async {
-    await PhoneStateBackground.stopCaller();
+    await PhoneStateBackground.stopPhoneStateBackground();
   }
 
   Future<void> _startCaller() async {

@@ -56,8 +56,8 @@ class PhoneStateBackground {
   }
 
   /// Stops the service and cleans the previous registered callback
-  static Future<void> stopCaller() async {
-    await _channel.invokeMethod('stopCaller');
+  static Future<void> stopPhoneStateBackground() async {
+    await _channel.invokeMethod('stopcallstate');
   }
 }
 

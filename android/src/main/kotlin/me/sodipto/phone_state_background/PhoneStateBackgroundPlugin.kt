@@ -65,7 +65,7 @@ class PhoneStateBackgroundPlugin : FlutterPlugin, MethodCallHandler, ActivityAwa
       Log.d(PLUGIN_NAME, "Service initialized...")
       result.success(true)
 
-    } else if (call.method == "stopCaller") {
+    } else if (call.method == "stopcallstate") {
       val sharedPref = currentActivity!!.getSharedPreferences(PLUGIN_NAME, Context.MODE_PRIVATE)
       val editor = sharedPref.edit()
       editor.remove(CALLBACK_SHAREDPREFERENCES_KEY)
