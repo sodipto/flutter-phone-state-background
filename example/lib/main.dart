@@ -52,9 +52,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Phone State Background Plugin Demo',
+      title: 'Phone State Background',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blueGrey,
       ),
       home: const MyHomePage(title: 'Phone State Background'),
     );
@@ -75,11 +75,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-
-    _checkPermission();
+    _hasPermission();
   }
 
-  Future<void> _checkPermission() async {
+  Future<void> _hasPermission() async {
     final permission = await PhoneStateBackground.checkPermission();
     print('Caller permission $permission');
     setState(() => hasPermission = permission);
@@ -87,14 +86,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _requestPermission() async {
     await PhoneStateBackground.requestPermissions();
-    await _checkPermission();
+    await _hasPermission();
   }
 
-  Future<void> _stopCaller() async {
+  Future<void> _stop() async {
     await PhoneStateBackground.stopPhoneStateBackground();
   }
 
-  Future<void> _startCaller() async {
+  Future<void> _init() async {
     if (hasPermission != true) return;
     await PhoneStateBackground.initialize(phoneStateBackgroundCallbackHandler);
   }
@@ -109,18 +108,44 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(hasPermission == true ? 'Has permission' : 'No permission'),
-            ElevatedButton(
-              onPressed: () => _requestPermission(),
-              child: const Text('Ask Permission'),
+            Text(
+              'Has Permission: $hasPermission',
+              style: TextStyle(
+                  fontSize: 16,
+                  color: hasPermission! ? Colors.green : Colors.red),
             ),
-            ElevatedButton(
-              onPressed: () => _startCaller(),
-              child: const Text('Start caller'),
+            const SizedBox(
+              height: 20,
             ),
-            ElevatedButton(
-              onPressed: () => _stopCaller(),
-              child: const Text('Stop caller'),
+            SizedBox(
+              width: 180,
+              child: ElevatedButton(
+                onPressed: () => _requestPermission(),
+                child: const Text('Check Permission'),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: SizedBox(
+                width: 180,
+                child: ElevatedButton(
+                  onPressed: () => _init(),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.green, // Background color
+                  ),
+                  child: const Text('Start Listener'),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 180,
+              child: ElevatedButton(
+                onPressed: () => _stop(),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red, // Background color
+                ),
+                child: const Text('Stop Listener'),
+              ),
             ),
           ],
         ),
