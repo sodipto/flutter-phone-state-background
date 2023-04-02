@@ -52,9 +52,9 @@ void phoneStateBackgroundCallbackHandler(PhoneStateBackgroundEvent event, String
 
 This callback handler must accept 3 arguments:
 
-- <b>PhoneStateBackgroundEvent</b>: The event type detect by our plugin in background.
+- <b>phoneStateBackgroundEvent</b>: The event type detect by our plugin in background.
 
-- <b>Number</b>: The incoming/outgoin number that is triggering the phone state call.
+- <b>number</b>: The incoming/outgoin number that is triggering the phone state call.
 
 - <b>duration</b>: An integer that represents the duration of the call in seconds.
 
