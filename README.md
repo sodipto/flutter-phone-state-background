@@ -30,7 +30,7 @@ otherwise an error will be throw saying that our receiver does not exist inside 
 
 
 ```xml
-<receiver android:name="me.sodipto.PhoneStateBackgroundServiceReceiver"
+<receiver android:name="me.sodipto.phone_state_background.PhoneStateBackgroundServiceReceiver"
     android:exported="false">
     <intent-filter>
         <action android:name="android.intent.action.PHONE_STATE" />
