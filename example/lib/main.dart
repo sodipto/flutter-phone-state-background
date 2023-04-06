@@ -11,28 +11,22 @@ Future<void> phoneStateBackgroundCallbackHandler(
 ) async {
   switch (event) {
     case PhoneStateBackgroundEvent.incomingstart:
-      print(
-          '[ Caller ] Incoming call start, number: $number, duration: $duration s');
+      print('Incoming call start, number: $number, duration: $duration s');
       break;
     case PhoneStateBackgroundEvent.incomingmissed:
-      print(
-          '[ Caller ] Incoming call missed, number: $number, duration: $duration s');
+      print('Incoming call missed, number: $number, duration: $duration s');
       break;
     case PhoneStateBackgroundEvent.incomingreceived:
-      print(
-          '[ Caller ] Incoming call received, number: $number, duration: $duration s');
+      print('Incoming call received, number: $number, duration: $duration s');
       break;
     case PhoneStateBackgroundEvent.incomingend:
-      print(
-          '[ Caller ] Incoming call ended, number: $number, duration $duration s');
+      print('Incoming call ended, number: $number, duration $duration s');
       break;
     case PhoneStateBackgroundEvent.outgoingstart:
-      print(
-          '[ Caller ] Ougoing call start, number: $number, duration: $duration s');
+      print('Ougoing call start, number: $number, duration: $duration s');
       break;
     case PhoneStateBackgroundEvent.outgoingend:
-      print(
-          '[ Caller ] Ougoing call ended, number: $number, duration: $duration s');
+      print('Ougoing call ended, number: $number, duration: $duration s');
       break;
   }
 }
@@ -77,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _hasPermission() async {
     final permission = await PhoneStateBackground.checkPermission();
-    print('Caller permission $permission');
+    print('Permission $permission');
     setState(() => hasPermission = permission);
   }
 

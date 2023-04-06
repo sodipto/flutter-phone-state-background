@@ -32,7 +32,8 @@ class PhoneStateBackground {
         onEventCallback!.toRawHandle(),
       ]);
     } on PlatformException catch (_) {
-      throw UnableToInitializeFailure('Unable to initialize Caller plugin');
+      throw UnableToInitializeFailure(
+          'Unable to initialize phone state background plugin');
     }
   }
 
