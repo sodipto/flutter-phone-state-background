@@ -62,6 +62,8 @@ class PhoneStateBackground {
   }
 }
 
+@pragma(
+    'vm:entry-point') // Be sure to annotate your callback function to avoid issues in release mode on Flutter >= 3.3.0
 void _callbackDispatcher() {
   // 1. Initialize MethodChannel used to communicate with the platform portion of the plugin.
   const MethodChannel _backgroundChannel =

@@ -4,6 +4,8 @@ import 'dart:async';
 import 'package:phone_state_background/phone_state_background.dart';
 
 /// Defines a callback that will handle all background incoming events
+@pragma(
+    'vm:entry-point') // Be sure to annotate your callback function to avoid issues in release mode on Flutter >= 3.3.0
 Future<void> phoneStateBackgroundCallbackHandler(
   PhoneStateBackgroundEvent event,
   String number,
