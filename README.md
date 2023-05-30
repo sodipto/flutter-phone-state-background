@@ -26,7 +26,7 @@ After importing this plugin to your project as usual, add the following to your 
 ```
 
 Also, apparently it is necessary to register the broadcast receiver manually,
-otherwise an error will be throw saying that our receiver does not exist inside the app. Within the `<application></application>` tags, add:
+otherwise an error will be throw saying that our receiver does not exist inside the app. Within the `<application></application> tags:`, 
 
 
 ```xml

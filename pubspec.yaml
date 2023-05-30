@@ -1,6 +1,6 @@
 name: phone_state_background
 description: A flutter plugin to handle Phone Call State and execute a Dart callback in background.
-version: 0.0.3
+version: 0.0.4
 homepage: https://github.com/sodipto/flutter-phone-state-background
 
 environment:
