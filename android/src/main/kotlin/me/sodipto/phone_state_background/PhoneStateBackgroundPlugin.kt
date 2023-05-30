@@ -137,6 +137,7 @@ class PhoneStateBackgroundPlugin : FlutterPlugin, MethodCallHandler, ActivityAwa
       } else {
         permissionsToAsk.add(permission)
       }
+      break
     }
 
     if(permissionsToAsk.size > 0)
@@ -145,14 +146,14 @@ class PhoneStateBackgroundPlugin : FlutterPlugin, MethodCallHandler, ActivityAwa
 
   override fun onAttachedToActivity(binding: ActivityPluginBinding) {
     currentActivity = binding.activity
-    binding.addRequestPermissionsResultListener(this)
-    requestPermissions()
+    //binding.addRequestPermissionsResultListener(this)
+    //requestPermissions()
   }
 
   override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
     currentActivity = binding.activity
-    binding.addRequestPermissionsResultListener(this)
-    requestPermissions()
+    //binding.addRequestPermissionsResultListener(this)
+    //requestPermissions()
   }
 
   override fun onDetachedFromActivityForConfigChanges() {

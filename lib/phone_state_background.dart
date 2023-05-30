@@ -62,8 +62,8 @@ class PhoneStateBackground {
   }
 }
 
-@pragma(
-    'vm:entry-point') // Be sure to annotate your callback function to avoid issues in release mode on Flutter >= 3.3.0
+/// Be sure to annotate your callback function to avoid issues in release mode on Flutter >= 3.3.0
+@pragma('vm:entry-point')
 void _callbackDispatcher() {
   // 1. Initialize MethodChannel used to communicate with the platform portion of the plugin.
   const MethodChannel _backgroundChannel =
@@ -83,25 +83,37 @@ void _callbackDispatcher() {
 
     late PhoneStateBackgroundEvent event;
     switch (args.elementAt(2)) {
+      /// Indicates an incoming call.
       case 'INCOMINGSTART':
         event = PhoneStateBackgroundEvent.incomingstart;
         break;
+
+      ///	Indicates an incoming call missed.
       case 'INCOMINGMISSED':
         event = PhoneStateBackgroundEvent.incomingmissed;
         break;
+
+      /// 	Indicates an incoming call received.
       case 'INCOMINGRECEIVED':
         event = PhoneStateBackgroundEvent.incomingreceived;
         break;
+
+      ///	Indicates an incoming call end.
       case 'INCOMINGEND':
         event = PhoneStateBackgroundEvent.incomingend;
         break;
+
+      /// Indicates an outgoing call start.
       case 'OUTGOINGEND':
         event = PhoneStateBackgroundEvent.outgoingend;
         break;
+
+      ///	Indicates an outgoing call end.
       case 'OUTGOINGSTART':
         event = PhoneStateBackgroundEvent.outgoingstart;
         break;
 
+      /// Unkown event
       default:
         throw Exception('Unkown event name');
     }

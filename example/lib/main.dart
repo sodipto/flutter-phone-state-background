@@ -1,11 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:phone_state_background/phone_state_background.dart';
 
+/// Be sure to annotate @pragma('vm:entry-point') your callback function to avoid issues in release mode on Flutter >= 3.3.0
+@pragma('vm:entry-point')
+
 /// Defines a callback that will handle all background incoming events
-@pragma(
-    'vm:entry-point') // Be sure to annotate your callback function to avoid issues in release mode on Flutter >= 3.3.0
 Future<void> phoneStateBackgroundCallbackHandler(
   PhoneStateBackgroundEvent event,
   String number,
@@ -13,22 +16,22 @@ Future<void> phoneStateBackgroundCallbackHandler(
 ) async {
   switch (event) {
     case PhoneStateBackgroundEvent.incomingstart:
-      print('Incoming call start, number: $number, duration: $duration s');
+      log('Incoming call start, number: $number, duration: $duration s');
       break;
     case PhoneStateBackgroundEvent.incomingmissed:
-      print('Incoming call missed, number: $number, duration: $duration s');
+      log('Incoming call missed, number: $number, duration: $duration s');
       break;
     case PhoneStateBackgroundEvent.incomingreceived:
-      print('Incoming call received, number: $number, duration: $duration s');
+      log('Incoming call received, number: $number, duration: $duration s');
       break;
     case PhoneStateBackgroundEvent.incomingend:
-      print('Incoming call ended, number: $number, duration $duration s');
+      log('Incoming call ended, number: $number, duration $duration s');
       break;
     case PhoneStateBackgroundEvent.outgoingstart:
-      print('Ougoing call start, number: $number, duration: $duration s');
+      log('Ougoing call start, number: $number, duration: $duration s');
       break;
     case PhoneStateBackgroundEvent.outgoingend:
-      print('Ougoing call ended, number: $number, duration: $duration s');
+      log('Ougoing call ended, number: $number, duration: $duration s');
       break;
   }
 }
@@ -62,24 +65,38 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  bool? hasPermission;
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
+  bool hasPermission = false;
+
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (state == AppLifecycleState.resumed) {
+      await _hasPermission();
+    }
+  }
 
   @override
   void initState() {
-    super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _hasPermission();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   Future<void> _hasPermission() async {
     final permission = await PhoneStateBackground.checkPermission();
-    print('Permission $permission');
-    setState(() => hasPermission = permission);
+    if (mounted) {
+      setState(() => hasPermission = permission);
+    }
   }
 
   Future<void> _requestPermission() async {
     await PhoneStateBackground.requestPermissions();
-    await _hasPermission();
   }
 
   Future<void> _stop() async {
@@ -104,8 +121,9 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               'Has Permission: $hasPermission',
               style: TextStyle(
-                  fontSize: 16,
-                  color: hasPermission! ? Colors.green : Colors.red),
+                fontSize: 16,
+                color: hasPermission ? Colors.green : Colors.red,
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -124,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: ElevatedButton(
                   onPressed: () => _init(),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.green, // Background color
+                    backgroundColor: Colors.green, // Background color
                   ),
                   child: const Text('Start Listener'),
                 ),
@@ -135,7 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: ElevatedButton(
                 onPressed: () => _stop(),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.red, // Background color
+                  backgroundColor: Colors.red, // Background color
                 ),
                 child: const Text('Stop Listener'),
               ),
