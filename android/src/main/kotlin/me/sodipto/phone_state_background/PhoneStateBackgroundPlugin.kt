@@ -52,8 +52,14 @@ class PhoneStateBackgroundPlugin : FlutterPlugin, MethodCallHandler, ActivityAwa
       }
       val sharedPref = currentActivity!!.getSharedPreferences(PLUGIN_NAME, Context.MODE_PRIVATE)
       val editor = sharedPref.edit()
-      editor.putLong(CALLBACK_SHAREDPREFERENCES_KEY, (arguments[0] as Long))
-      editor.putLong(CALLBACK_USER_SHAREDPREFERENCES_KEY, (arguments[1] as Long))
+      
+      val arg0 = arguments[0]
+      val arg1 = arguments[1]
+      val arg0Long: Long = if (arg0 is Long) arg0 else (arg0 as Int).toLong();
+      val arg1Long: Long = if (arg1 is Long) arg1 else (arg1 as Int).toLong();
+      editor.putLong(CALLBACK_SHAREDPREFERENCES_KEY, (arg0Long as Long))
+      editor.putLong(CALLBACK_USER_SHAREDPREFERENCES_KEY, (arg1Long as Long))
+      
       editor.commit()
 
       val context = currentActivity!!.applicationContext
